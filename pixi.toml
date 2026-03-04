@@ -1,0 +1,15 @@
+[workspace]
+authors = ["Xingxin HE <xingxin.he@connect.ust.hk>"]
+channels = ["robostack-humble", "conda-forge"]
+name = "pixi_realsense_ros2"
+platforms = ["linux-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+ros-humble-desktop = ">=0.10.0,<0.11"
+ros-humble-librealsense2 = ">=2.55.1,<3"
+ros-humble-realsense2-camera = ">=4.55.1,<5"
+ros-humble-realsense2-camera-msgs = ">=4.55.1,<5"
+ros-humble-realsense2-description = ">=4.55.1,<5"
