@@ -20,5 +20,11 @@ pixi install
 pixi run rs-enumerate-devices
 
 # Launch the camera
-pixi run ros2 launch realsense2_camera rs_launch.py
+pixi run camera
+
+# In another terminal, view camera images with crisp_py + matplotlib
+pixi run test-image
 ```
+
+`test-image` sets `CRISP_CONFIG_PATH` to `./crisp_configs` and loads
+`crisp_configs/cameras/realsense.yaml` through `crisp_py.make_camera("realsense")`.

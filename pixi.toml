@@ -6,6 +6,8 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 [tasks]
+camera = "ros2 launch realsense2_camera rs_launch.py"
+test-image = { cmd = "python test_camera.py", env = { CRISP_CONFIG_PATH = "/home/hex/Documents/github/pixi_realsense_ros2/crisp_configs" } }
 
 [dependencies]
 ros-humble-desktop = ">=0.10.0,<0.11"
@@ -13,3 +15,11 @@ ros-humble-librealsense2 = ">=2.55.1,<3"
 ros-humble-realsense2-camera = ">=4.55.1,<5"
 ros-humble-realsense2-camera-msgs = ">=4.55.1,<5"
 ros-humble-realsense2-description = ">=4.55.1,<5"
+python = ">=3.11.14,<3.12"
+matplotlib = ">=3.10.8,<4"
+ros-humble-ros2-control = ">=2.47.0,<3"
+ros-humble-ros2-controllers = ">=2.40.0,<3"
+ros-humble-compressed-image-transport = ">=2.5.2,<3"
+
+[pypi-dependencies]
+crisp-python = ">=3.4.0, <4"
