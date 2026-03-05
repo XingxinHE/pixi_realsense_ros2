@@ -5,9 +5,14 @@ name = "pixi_realsense_ros2"
 platforms = ["linux-64"]
 version = "0.1.0"
 
+[activation.env]
+CRISP_CONFIG_PATH = "./crisp_configs"
+
 [tasks]
-camera = "ros2 launch realsense2_camera rs_launch.py"
-test-image = { cmd = "python test_camera.py", env = { CRISP_CONFIG_PATH = "/home/hex/Documents/github/pixi_realsense_ros2/crisp_configs" } }
+camera = "ros2 launch realsense2_camera rs_launch.py camera_namespace:=/ camera_name:=camera enable_depth:=false rgb_camera.color_profile:=640x480x30"
+test-image = "python one_camera.py"
+camera-dual = "ros2 launch realsense2_camera rs_multi_camera_launch.py camera_namespace1:=/ camera_name1:=wrist serial_no1:=_342522074350 camera_namespace2:=/ camera_name2:=third_person serial_no2:=_347622071856 enable_depth1:=false enable_depth2:=false rgb_camera.color_profile1:=640x480x30 rgb_camera.color_profile2:=640x480x30"
+test-image-dual = "python two_cameras.py"
 
 [dependencies]
 ros-humble-desktop = ">=0.10.0,<0.11"
