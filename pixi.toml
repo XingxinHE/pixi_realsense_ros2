@@ -7,6 +7,9 @@ version = "0.1.0"
 
 [activation.env]
 CRISP_CONFIG_PATH = "./crisp_configs"
+ROS_DOMAIN_ID = "100"
+RMW_IMPLEMENTATION = "rmw_zenoh_cpp"
+ZENOH_CONFIG_OVERRIDE = 'mode="client";connect/endpoints=["tcp/172.16.0.100:7447"]'
 
 [tasks]
 camera = "ros2 launch realsense2_camera rs_launch.py camera_namespace:=/ camera_name:=camera enable_depth:=false rgb_camera.color_profile:=640x480x30"
@@ -25,6 +28,7 @@ matplotlib = ">=3.10.8,<4"
 ros-humble-ros2-control = ">=2.47.0,<3"
 ros-humble-ros2-controllers = ">=2.40.0,<3"
 ros-humble-compressed-image-transport = ">=2.5.2,<3"
+ros-humble-rmw-zenoh-cpp = ">=0.1.0,<0.2"
 
 [pypi-dependencies]
 crisp-python = ">=3.4.0, <4"
