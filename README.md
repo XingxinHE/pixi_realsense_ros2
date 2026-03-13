@@ -43,6 +43,7 @@ pixi run test-image
 
 ```shell
 # (1) Terminal: Launch both RealSense cameras (color-only) with fixed serial numbers
+#     and force an initial device reset for a clean start.
 pixi run camera-dual
 
 # (2) Terminal: View both streams in one matplotlib window
@@ -62,3 +63,28 @@ The launch task pins serial numbers with a leading underscore:
 - `serial_no2:=_347622071856` (third_person)  <- Change yours serial number in pixi.toml
 
 The `_` prefix is required by the realsense ROS2 wrapper to avoid numeric-string conversion issues.
+
+To discover your serials:
+```shell
+pixi run rs-enumerate-devices
+```
+
+Use the `Serial Number` field from `rs-enumerate-devices`, not `Asic Serial Number`.
+
+# Graceful exit and stale-process recovery
+
+`Ctrl+C` is the correct way to stop both programs:
+- `pixi run camera-dual`: wait until launch prints shutdown/clean exit lines.
+- `pixi run test-image-dual`: `KeyboardInterrupt` is handled; window closes in `finally`.
+
+If a camera appears stuck after exit, run:
+```shell
+# Stop any leftover RealSense ROS nodes/launchers
+pkill -f realsense2_camera_node || true
+pkill -f rs_multi_camera_launch.py || true
+
+# Check no process still holds video devices
+lsof /dev/video* 2>/dev/null
+```
+
+If needed, unplug/replug the camera USB cables.
