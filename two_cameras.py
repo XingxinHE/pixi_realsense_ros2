@@ -26,9 +26,35 @@ def _load_camera(config_name: str):
     return camera
 
 
+def _fix_resolution_order_if_needed(camera, camera_label: str) -> None:
+    """Swap (width, height) -> (height, width) when stream orientation is mismatched.
+
+    Some crisp_py versions interpret `resolution` as (height, width) during resizing.
+    If configs are authored as (width, height), landscape cameras can appear portrait.
+    """
+    configured_resolution = camera.config.resolution
+    if configured_resolution is None or len(configured_resolution) != 2:
+        return
+
+    configured_width, configured_height = configured_resolution
+    frame_height, frame_width = camera.current_image.shape[:2]
+
+    configured_is_landscape = configured_width >= configured_height
+    frame_is_landscape = frame_width >= frame_height
+
+    if configured_is_landscape != frame_is_landscape:
+        camera.config.resolution = (configured_height, configured_width)
+        print(
+            f"[two_cameras] Fixed resolution order for {camera_label}: "
+            f"{configured_width}x{configured_height} -> {configured_height}x{configured_width}."
+        )
+
+
 def main() -> None:
     third_person_camera = _load_camera("third_person")
     wrist_camera = _load_camera("wrist")
+    _fix_resolution_order_if_needed(third_person_camera, "third_person")
+    _fix_resolution_order_if_needed(wrist_camera, "wrist")
 
     plt.ion()
     figure, axes = plt.subplots(1, 2, figsize=(12, 5))
