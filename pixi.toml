@@ -24,6 +24,8 @@ camera = "ros2 launch realsense2_camera rs_launch.py camera_namespace:=/ camera_
 test-image = "python one_camera.py"
 camera-dual = "ros2 launch realsense2_camera rs_multi_camera_launch.py camera_namespace1:=/ camera_name1:=wrist serial_no1:=_342522074350 camera_namespace2:=/ camera_name2:=third_person serial_no2:=_347622071856 initial_reset1:=true initial_reset2:=true enable_depth1:=false enable_depth2:=false rgb_camera.color_profile1:=640x480x30 rgb_camera.color_profile2:=640x480x30"
 test-image-dual = "python two_cameras.py"
+camera-triple = "bash scripts/launch_three_cameras.sh"
+test-image-triple = "python three_cameras.py"
 list-cameras = "python list_cameras.py"
 clean = "pkill -f realsense2_camera_node"
 

@@ -88,3 +88,28 @@ lsof /dev/video* 2>/dev/null
 ```
 
 If needed, unplug/replug the camera USB cables.
+
+# Usage (three-camera, leader/follower)
+
+```shell
+# (1) Terminal: Launch three RealSense cameras (color-only)
+pixi run camera-triple
+
+# (2) Terminal: View all three streams in one matplotlib window
+pixi run test-image-triple
+```
+
+This launch pins camera names and serial numbers as:
+- `robot0_agentview_left`  -> `342522074350`
+- `robot0_agentview_right` -> `347622071856`
+- `robot0_eye_in_hand`     -> `336222070633`
+
+Expected image topics:
+- `/robot0_agentview_left/color/image_raw`
+- `/robot0_agentview_right/color/image_raw`
+- `/robot0_eye_in_hand/color/image_raw`
+
+The launch script prefixes serials with `_` (required by realsense ROS2 wrapper):
+- `serial_no:=_342522074350`
+- `serial_no:=_347622071856`
+- `serial_no:=_336222070633`
