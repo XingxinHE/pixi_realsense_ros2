@@ -1,9 +1,12 @@
 [workspace]
 authors = ["Xingxin HE <xingxin.he@connect.ust.hk>"]
-channels = ["robostack-humble", "conda-forge"]
+channels = ["robostack-jazzy", "conda-forge"]
 name = "pixi_realsense_ros2"
 platforms = ["linux-64"]
 version = "0.1.0"
+
+[system-requirements]
+libc = { family = "glibc", version = "2.39" }
 
 [activation]
 scripts = [
@@ -21,25 +24,24 @@ ZENOH_SESSION_CONFIG_URI="./configs/zenoh_client.json5"
 
 [tasks]
 camera = "ros2 launch realsense2_camera rs_launch.py camera_namespace:=/ camera_name:=camera enable_depth:=false rgb_camera.color_profile:=640x480x30"
-test-image = "python one_camera.py"
-camera-dual = "ros2 launch realsense2_camera rs_multi_camera_launch.py camera_namespace1:=/ camera_name1:=wrist serial_no1:=_342522074350 camera_namespace2:=/ camera_name2:=third_person serial_no2:=_347622071856 initial_reset1:=true initial_reset2:=true enable_depth1:=false enable_depth2:=false rgb_camera.color_profile1:=640x480x30 rgb_camera.color_profile2:=640x480x30"
-test-image-dual = "python two_cameras.py"
+camera-dual = "bash scripts/launch_two_cameras.sh"
 camera-triple = "bash scripts/launch_three_cameras.sh"
-test-image-triple = "python three_cameras.py"
-list-cameras = "python list_cameras.py"
 clean = "pkill -f realsense2_camera_node"
-
+zenoh-router = "ros2 run rmw_zenoh_cpp rmw_zenohd"
 [dependencies]
-ros-humble-ros-base = "=0.10.0"
-ros-humble-librealsense2 = "=2.55.1"
-ros-humble-realsense2-camera = "=4.55.1"
-ros-humble-realsense2-camera-msgs = "=4.55.1"
-ros-humble-realsense2-description = "=4.55.1"
-python = ">=3.11.14,<3.12"
+ros-jazzy-ros-base = "*"
+ros-jazzy-librealsense2 = ">=2.57.7,<2.57.8"
+ros-jazzy-realsense2-camera = ">=4.57.7,<4.57.8"
+ros-jazzy-realsense2-camera-msgs = ">=4.57.7,<4.57.8"
+ros-jazzy-realsense2-description = ">=4.57.7,<4.57.8"
+python = ">=3.12,<3.13"
 matplotlib = ">=3.10.8,<4"
-ros-humble-compressed-image-transport = "=2.5.3"
-ros-humble-rmw-zenoh-cpp = "=0.1.2"
-ros2-distro-mutex = "=0.7.0"
+numpy = ">=2,<=2.3.0"
+ros-jazzy-compressed-image-transport = "*"
+ros-jazzy-rmw-zenoh-cpp = "*"
+ros2-distro-mutex = ">=0.15.0,<0.16"
+ros-jazzy-rqt-image-view = ">=1.3.0,<2"
+ros-jazzy-rqt-gui = ">=1.6.3,<2"
 
 [pypi-dependencies]
 crisp-python = ">=3.4.0, <4"

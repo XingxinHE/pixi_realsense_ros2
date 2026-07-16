@@ -32,12 +32,10 @@ pixi run rs-enumerate-devices
 # (1) Terminal: Launch the camera
 pixi run camera
 
-# (2) Terminal: View camera images with crisp_py + matplotlib
-pixi run test-image
+# (2) Terminal:
+pixi run ros2 run rqt_gui rqt_gui
 ```
 
-`test-image` uses `CRISP_CONFIG_PATH=./crisp_configs` from Pixi activation and loads
-`crisp_configs/cameras/realsense.yaml` through `crisp_py.make_camera("realsense")`.
 
 # Usage (two-camera)
 
@@ -46,17 +44,9 @@ pixi run test-image
 #     and force an initial device reset for a clean start.
 pixi run camera-dual
 
-# (2) Terminal: View both streams in one matplotlib window
-pixi run test-image-dual
+# (2) Terminal:
+pixi run ros2 run rqt_gui rqt_gui
 ```
-
-`test-image-dual` loads:
-- `crisp_configs/cameras/third_person.yaml`
-- `crisp_configs/cameras/wrist.yaml`
-
-Expected topics:
-- `/third_person/color/image_raw`
-- `/wrist/color/image_raw`
 
 The launch task pins serial numbers with a leading underscore:
 - `serial_no1:=_342522074350` (wrist)  <- Change yours serial number in pixi.toml
@@ -72,16 +62,10 @@ pixi run rs-enumerate-devices
 Use the `Serial Number` field from `rs-enumerate-devices`, not `Asic Serial Number`.
 
 # Graceful exit and stale-process recovery
-
-`Ctrl+C` is the correct way to stop both programs:
-- `pixi run camera-dual`: wait until launch prints shutdown/clean exit lines.
-- `pixi run test-image-dual`: `KeyboardInterrupt` is handled; window closes in `finally`.
-
 If a camera appears stuck after exit, run:
 ```shell
 # Stop any leftover RealSense ROS nodes/launchers
 pkill -f realsense2_camera_node || true
-pkill -f rs_multi_camera_launch.py || true
 
 # Check no process still holds video devices
 lsof /dev/video* 2>/dev/null
@@ -92,11 +76,7 @@ If needed, unplug/replug the camera USB cables.
 # Usage (three-camera, leader/follower)
 
 ```shell
-# (1) Terminal: Launch three RealSense cameras (color-only)
-pixi run camera-triple
-
-# (2) Terminal: View all three streams in one matplotlib window
-pixi run test-image-triple
+pixi run ros2 run rqt_gui rqt_gui
 ```
 
 This launch pins camera names and serial numbers as:
