@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
-# Allow caller overrides while keeping sane defaults for this workspace.
-export ROS_DOMAIN_ID="${ROS_DOMAIN_ID:-100}"
-export RMW_IMPLEMENTATION="${RMW_IMPLEMENTATION:-rmw_zenoh_cpp}"
-export ZENOH_SESSION_CONFIG_URI="${ZENOH_SESSION_CONFIG_URI:-./configs/zenoh_client.json5}"
+# Pixi does not auto-load .env files, so load the workspace-local one here.
+script_dir="${BASH_SOURCE[0]%/*}"
+project_root="${script_dir%/*}"
+env_file="$project_root/.env"
+
+[ -f "$env_file" ] && . "$env_file"
+
+# Safe local default. For multi-machine DDS, set this in .env to the LAN/Wi-Fi NIC.
+export ROS_NETWORK_INTERFACE="${ROS_NETWORK_INTERFACE:-lo}"
+
 
 # Keep ROS logs in a writable directory.
 if [ -z "${ROS_LOG_DIR:-}" ]; then

@@ -18,9 +18,9 @@ scripts = [
 [activation.env]
 CRISP_CONFIG_PATH = "./crisp_configs"
 ROS_DOMAIN_ID = "100"
-RMW_IMPLEMENTATION = "rmw_zenoh_cpp"
-ZENOH_SESSION_CONFIG_URI="./configs/zenoh_client.json5"
-
+RMW_IMPLEMENTATION = "rmw_cyclonedds_cpp"  # or rmw_zenoh_cpp
+ZENOH_SESSION_CONFIG_URI = "./zenoh_client.json5"
+CYCLONEDDS_URI = "file://$PIXI_PROJECT_ROOT/cyclone_config.xml"
 
 [tasks]
 camera = "ros2 launch realsense2_camera rs_launch.py camera_namespace:=/ camera_name:=camera enable_depth:=false rgb_camera.color_profile:=640x480x30"
