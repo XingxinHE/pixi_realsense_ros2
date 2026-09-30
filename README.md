@@ -76,6 +76,8 @@ If needed, unplug/replug the camera USB cables.
 # Usage (three-camera, leader/follower)
 
 ```shell
+pixi run camera-triple
+# Another terminal:
 pixi run ros2 run rqt_gui rqt_gui
 ```
 
@@ -93,3 +95,7 @@ The launch script prefixes serials with `_` (required by realsense ROS2 wrapper)
 - `serial_no:=_342522074350`
 - `serial_no:=_347622071856`
 - `serial_no:=_336222070633`
+
+# Camera latency and network benchmarks
+
+Run `pixi run latency --duration 60 --output results/baseline`
